@@ -1,99 +1,124 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# nest-task-manager
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+**nest-task-manager** é uma aplicação desenvolvida em TypeScript utilizando o framework NestJS para gerenciar tarefas de forma eficiente. Este projeto fornece uma API RESTful para criar, atualizar, listar e excluir tarefas, garantindo a segurança das operações através de autenticação JWT (JSON Web Token).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Tecnologias Utilizadas
 
-## Description
+- **TypeScript**
+- **NestJS**
+  - Nest CLI
+  - Módulo HTTP
+  - Módulo de Autenticação
+- **JWT** (JSON Web Token) para autenticação
+- **TypeORM** para interação com o banco de dados
+- **Swagger** para documentação da API
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Funcionalidades
+1. **Gerenciamento de Projetos**
+   - Criar um novo projeto
+   - Listar todos os projetos
+   - Atualizar um projeto
+   - Excluir um projeto
 
-## Project setup
+2. **Gerenciamento de Tarefas**
+   - Criar uma nova tarefa
+   - Listar todas as tarefas
+   - Atualizar uma tarefa existente
+   - Excluir uma tarefa
 
-```bash
-$ npm install
+3. **Autenticação e Autorização**
+   - Registro de novos usuários
+   - Login de usuários existentes
+   - Proteção de rotas utilizando JWT
+
+## Segurança com JWT
+
+A aplicação utiliza o JSON Web Token (JWT) para autenticação e autorização dos usuários. O fluxo de autenticação é o seguinte:
+
+1. **Registro e Login**
+   - O usuário se registra fornecendo credenciais como nome de usuário e senha.
+   - Ao fazer login, a aplicação valida as credenciais e, se corretas, gera um token JWT assinado com uma chave secreta.
+
+2. **Proteção de Rotas**
+   - Rotas que requerem autenticação são protegidas por Guards que verificam a presença e validade do token JWT no cabeçalho da requisição.
+   - O token é validado utilizando a estratégia JWT do Passport, garantindo que apenas usuários autenticados possam acessar essas rotas.
+
+3. **Validade do Token**
+   - O token JWT possui um tempo de expiração definido, após o qual o usuário precisa realizar um novo login para obter um token válido.
+
+Para mais detalhes sobre a implementação da autenticação JWT no NestJS, consulte a [documentação oficial](https://docs.nestjs.com/security/authentication).
+
+## Instalação e Execução
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/LeonardoSilva-code/nest-task-manager.git
+   ```
+
+2. **Navegue até o diretório do projeto:**
+   ```bash
+   cd nest-task-manager
+   ```
+
+3. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
+
+4. **Execute a aplicação:**
+   ```bash
+   npm run start:dev
+   ```
+
+5. **Acesse a API:**
+   - Documentação Swagger: [http://localhost:3000/swagger-ui.html](http://localhost:3000/swagger-ui.html)
+   - API Base URL: [http://localhost:3000](http://localhost:3000)
+
+## Estrutura do Projeto
+
+```plaintext
+src
+├── auth
+│   ├── auth.controller.ts       # Controlador de autenticação
+│   ├── auth.module.ts           # Módulo de autenticação
+│   ├── auth.dto.ts              # DTOs de autenticação
+│   ├── auth.service.ts          # Serviço de autenticação
+│   ├── constants.ts             # Constantes JWT
+│   └── auth.guard.ts            # Guard para proteger rotas com JWT
+├── projects
+│   ├── dto                      # DTOs de projects
+│   ├── entities                 # Entidades do banco de dados
+│   ├── mapper                   # Mapper para converter os objetos
+│   ├── tasks.controller.ts      # Controlador de projetos
+│   ├── tasks.module.ts          # Módulo de projetos
+│   ├── tasks.service.ts         # Serviço de projetos
+├── tasks
+│   ├── dto                      # DTOs de task
+│   ├── entities                 # Entidades do banco de dados
+│   ├── mapper                   # Mapper para converter os objetos
+│   ├── tasks.controller.ts      # Controlador de tarefas
+│   ├── tasks.module.ts          # Módulo de tarefas
+│   ├── tasks.service.ts         # Serviço de tarefas
+├── users
+│   ├── dto                      # DTOs de users
+│   ├── entities                 # Entidades do banco de dados
+│   ├── mapper                   # Mapper para converter os objetos
+│   ├── users.controller.ts      # Controlador de usuários
+│   ├── users.module.ts          # Módulo de usuários
+│   ├── users.service.ts         # Serviço de usuários
+│   └── user.entity.ts           # Entidade de usuário para TypeORM
+├── app.module.ts                # Módulo raiz da aplicação
+└── main.ts                      # Ponto de entrada da aplicação
 ```
 
-## Compile and run the project
+## Documentação da API
 
-```bash
-# development
-$ npm run start
+A documentação da API é gerada automaticamente pelo Swagger e pode ser acessada em [http://localhost:3000/api](http://localhost:3000/api) após iniciar a aplicação.
 
-# watch mode
-$ npm run start:dev
+## Licença
 
-# production mode
-$ npm run start:prod
-```
+Este projeto é licenciado sob a [MIT License](LICENSE).
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Desenvolvido por Leonardo Silva. 
